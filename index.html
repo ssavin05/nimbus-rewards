@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#4F46E5"/>
+<title id="pageTitle">Plataforma de Fidelización</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<div id="layoutRow">
+
+  <nav class="bottom-nav" id="sideNav">
+    <div class="nav-logo" id="navLogo"></div>
+    <button class="nav-btn active" data-tab="home" onclick="showTab('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span id="navLabelHome">Inicio</span>
+    </button>
+    <button class="nav-btn" data-tab="catalog" onclick="showTab('catalog')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span id="navLabelCatalog">Catálogo</span>
+    </button>
+    <button class="nav-btn" data-tab="rewards" onclick="showTab('rewards')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg>
+      <span id="navLabelRewards">Recompensas</span>
+    </button>
+    <button class="nav-btn" data-tab="history" onclick="showTab('history')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>
+      <span>Historial</span>
+    </button>
+    <button class="nav-btn" data-tab="profile" onclick="showTab('profile')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      <span>Perfil</span>
+    </button>
+    <button class="nav-btn" data-tab="admin" onclick="showTab('admin')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-5 4 3 5-7"/></svg>
+      <span>Panel</span>
+    </button>
+    <div id="sidebarDark" style="display:none;padding:14px 20px 0;">
+      <button class="dark-toggle" style="background:var(--bg2);border-color:var(--border);color:var(--txt2);width:44px;height:44px;" onclick="toggleDark()">🌙</button>
+    </div>
+  </nav>
+
+  <div id="appWrapper">
+
+    <div class="top-bar">
+      <div class="tb-left">
+        <div class="tb-pts" id="tbPts">0</div>
+      </div>
+      <div class="tb-right">
+        <button class="icon-btn" onclick="showNotifications()">🔔<span class="badge-dot" id="tbNotifDot" style="display:none;"></span></button>
+      </div>
+    </div>
+
+    <div id="appContent">
+
+      <div class="app-header">
+        <div class="header-row1">
+          <div class="logo" id="appLogo"></div>
+          <div class="header-actions">
+            <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+            <button class="icon-btn" onclick="showNotifications()">🔔<span class="badge-dot" id="notifDot" style="display:none;"></span></button>
+          </div>
+        </div>
+        <div class="loyalty-card">
+          <div class="lc-top">
+            <div>
+              <div class="lc-greet" id="lcGreet">Bienvenido</div>
+              <div class="lc-name" id="lcName">Cliente</div>
+            </div>
+            <div class="level-pill" id="lcLevel">Nivel</div>
+          </div>
+          <div class="pts-row">
+            <div class="pts-big" id="lcBalance">0</div>
+            <div class="pts-label" id="lcUnitLabel">puntos</div>
+          </div>
+          <div class="prog-wrap"><div class="prog-fill" id="lcProgFill" style="width:0%;"></div></div>
+          <div class="prog-label" id="lcProgLabel"></div>
+        </div>
+      </div>
+
+      <!-- ═══ HOME ═══ -->
+      <section class="section-screen active" id="screen-home">
+        <div class="search-wrap" style="margin-top:14px;">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput" placeholder="Buscar..." oninput="onSearch(this.value)"/>
+        </div>
+
+        <div class="sec-hd"><h2>Promociones</h2><span class="sec-link" onclick="showTab('catalog')">Ver catálogo</span></div>
+        <div class="promo-scroll" id="promoScroll"></div>
+
+        <div class="sec-hd"><h2 id="catalogSectionTitle">Catálogo</h2><span class="sec-link" onclick="showTab('catalog')">Ver todo</span></div>
+        <div class="cat-scroll" id="catScrollHome"></div>
+        <div class="catalog-grid" id="homeGrid"></div>
+
+        <div class="sec-hd"><h2>Opiniones</h2></div>
+        <div class="reviews-section">
+          <div class="review-input-wrap">
+            <h4>Comparte tu experiencia</h4>
+            <div class="star-input" id="starInput"></div>
+            <textarea class="c-input" id="reviewText" rows="2" placeholder="Cuéntanos qué te pareció..."></textarea>
+            <button class="submit-review" onclick="submitReview()">Publicar opinión</button>
+          </div>
+          <div id="reviewsList"></div>
+        </div>
+      </section>
+
+      <!-- ═══ CATALOG ═══ -->
+      <section class="section-screen" id="screen-catalog">
+        <div class="search-wrap" style="margin-top:14px;">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput2" placeholder="Buscar..." oninput="onSearch(this.value)"/>
+        </div>
+        <div class="cat-scroll" id="catScroll"></div>
+        <div class="catalog-grid" id="catalogGrid"></div>
+      </section>
+
+      <!-- ═══ REWARDS ═══ -->
+      <section class="section-screen" id="screen-rewards">
+        <div class="sec-hd"><h2>Niveles</h2></div>
+        <div class="levels-wrap" id="levelsWrap"></div>
+        <div class="redeem-hd"><h2 id="redeemTitle" style="font-family:var(--font-display);font-size:16px;font-weight:800;">Canjea tus recompensas</h2></div>
+        <div id="redeemList" style="margin-top:10px;"></div>
+      </section>
+
+      <!-- ═══ HISTORY ═══ -->
+      <section class="section-screen" id="screen-history">
+        <div class="hist-tabs" id="histTabs"></div>
+        <div id="histList"></div>
+      </section>
+
+      <!-- ═══ PROFILE ═══ -->
+      <section class="section-screen" id="screen-profile">
+        <div class="profile-hd">
+          <div class="profile-avatar" id="profAvatar">C</div>
+          <div class="profile-name" id="profName">Cliente</div>
+          <div class="profile-sub" id="profSub"></div>
+        </div>
+        <div class="profile-list" id="profileList"></div>
+      </section>
+
+      <!-- ═══ ADMIN ═══ -->
+      <section class="section-screen" id="screen-admin">
+        <div class="admin-wrap">
+          <div class="admin-banner">
+            <h3>Panel empresarial</h3>
+            <p id="adminBannerText">Administra clientes, productos, promociones, recompensas y la apariencia de tu app — sin tocar código.</p>
+          </div>
+          <div class="admin-tabs" id="adminTabs"></div>
+          <div id="adminPanels"></div>
+        </div>
+      </section>
+
+    </div>
+
+    <button class="cart-fab" id="cartFab" onclick="showCart()">
+      🛒<span class="cart-fab-badge" id="cartBadge" style="display:none;">0</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ OVERLAYS ═══ -->
+<div class="overlay" id="ovCart" onclick="closeOnBg(event,'ovCart')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hd"><span id="cartSheetTitle">Tu pedido</span> <button class="close-btn" onclick="closeOverlay('ovCart')">✕</button></div>
+    <div id="cartBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="ovProduct" onclick="closeOnBg(event,'ovProduct')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div style="display:flex;justify-content:flex-end;padding:10px 16px 0;"><button class="close-btn" onclick="closeOverlay('ovProduct')">✕</button></div>
+    <div id="productDetailBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="ovNotif" onclick="closeOnBg(event,'ovNotif')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hd">Notificaciones <button class="close-btn" onclick="closeOverlay('ovNotif')">✕</button></div>
+    <div id="notifBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="ovSuccess" onclick="closeOnBg(event,'ovSuccess')">
+  <div class="sheet" style="text-align:center;padding:34px 24px;">
+    <div class="success-ring" id="successRing"><span class="success-check-icon">✅</span></div>
+    <div style="font-family:var(--font-display);font-size:19px;font-weight:800;margin-bottom:6px;" id="successTitle">¡Listo!</div>
+    <div style="color:var(--txt2);font-size:13px;margin-bottom:18px;" id="successMsg"></div>
+    <button class="checkout-btn" style="width:100%;margin:0;" onclick="closeOverlay('ovSuccess')">Listo</button>
+  </div>
+</div>
+
+<!-- ═══ SELECTOR DE TIPO DE NEGOCIO ═══ -->
+<div class="overlay" id="ovBizType">
+  <div class="sheet wide" style="border-radius:28px;">
+    <div style="padding:22px 20px 6px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:8px;">🏷️</div>
+      <div style="font-family:var(--font-display);font-size:19px;font-weight:800;">¿Qué tipo de negocio eres?</div>
+      <div style="color:var(--txt2);font-size:12.5px;margin-top:4px;">Elige una plantilla para precargar vocabulario y módulos. Podrás ajustar todo después.</div>
+    </div>
+    <div class="biztype-grid" id="bizTypeGrid"></div>
+    <div style="padding:0 20px;">
+      <button class="checkout-btn" style="width:100%;margin:6px 0 0;" onclick="closeOverlay('ovBizType');toast('Plantilla aplicada')">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONFIRMACIÓN GENÉRICA (cerrar sesión / eliminar cuenta) ═══ -->
+<div class="overlay" id="ovConfirm" onclick="closeOnBg(event,'ovConfirm')">
+  <div class="sheet" style="text-align:center;padding:30px 24px 26px;">
+    <div style="font-size:52px;margin-bottom:10px;" id="confirmIcon">⚠️</div>
+    <div style="font-family:var(--font-display);font-size:18px;font-weight:800;margin-bottom:6px;" id="confirmTitle">¿Estás seguro?</div>
+    <div style="color:var(--txt2);font-size:13px;margin-bottom:20px;line-height:1.5;" id="confirmMsg"></div>
+    <div style="display:flex;gap:10px;">
+      <button class="redeem-btn ghost-btn" style="flex:1;padding:13px;border-radius:14px;" onclick="closeOverlay('ovConfirm')">Cancelar</button>
+      <button class="redeem-btn" id="confirmBtn" style="flex:1;padding:13px;border-radius:14px;">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EDITAR PERFIL / CREAR CUENTA NUEVA ═══ -->
+<div class="overlay" id="ovAccountForm" onclick="closeOnBg(event,'ovAccountForm')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hd"><span id="accFormTitle">Editar datos personales</span><button class="close-btn" onclick="closeOverlay('ovAccountForm')">✕</button></div>
+    <div style="padding:18px 20px 4px;">
+      <div style="margin-bottom:14px;">
+        <div class="tb-row-label" style="margin-bottom:6px;">Nombre completo</div>
+        <input type="text" id="accName" placeholder="Tu nombre" style="width:100%;border:2px solid var(--border);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--txt);background:var(--bg);outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--c1)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div class="tb-row-label" style="margin-bottom:6px;">Correo electrónico</div>
+        <input type="email" id="accEmail" placeholder="tucorreo@email.com" style="width:100%;border:2px solid var(--border);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--txt);background:var(--bg);outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--c1)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div class="tb-row-label" style="margin-bottom:6px;">Teléfono</div>
+        <input type="tel" id="accPhone" placeholder="+52 646 000 0000" style="width:100%;border:2px solid var(--border);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:600;color:var(--txt);background:var(--bg);outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='var(--c1)'" onblur="this.style.borderColor='var(--border)'"/>
+      </div>
+    </div>
+    <button class="checkout-btn" id="accFormBtn" onclick="saveAccountForm()">Guardar cambios</button>
+  </div>
+</div>
+
+<!-- ═══ SUCURSALES ═══ -->
+<div class="overlay" id="ovBranches" onclick="closeOnBg(event,'ovBranches')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hd">Sucursales <button class="close-btn" onclick="closeOverlay('ovBranches')">✕</button></div>
+    <div id="branchesBody" style="padding:10px 16px 6px;"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" style="position:fixed;"><span id="toastMsg"></span></div>
+
+<script src="script.js"></script>
+</body>
+</html>

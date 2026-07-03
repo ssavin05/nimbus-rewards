@@ -303,7 +303,7 @@ function addToCart(id,qty,btnEl){
     document.getElementById('successTitle').textContent = v.transactionVerb;
     document.getElementById('successMsg').textContent = `Ganaste ${p.pts} ${APP_CONFIG.loyaltyProgram.unitNamePlural} de lealtad.`;
     closeOverlay('ovProduct');
-    openOverlay('ovSuccess');
+    openSuccess();
     setTimeout(()=>launchConfetti(document.getElementById('successRing')),80);
     return;
   }
@@ -431,7 +431,7 @@ function checkout(){
   closeOverlay('ovCart');
   document.getElementById('successTitle').textContent = v.transactionVerb;
   document.getElementById('successMsg').textContent = `Ganaste ${t.pts} ${APP_CONFIG.loyaltyProgram.unitNamePlural} de lealtad.`;
-  openOverlay('ovSuccess');
+  openSuccess();
   setTimeout(()=>launchConfetti(document.getElementById('successRing')),80);
 }
 function renderPromos(){
@@ -824,8 +824,16 @@ function toggleDark(){
   });
 }
 function closeOnBg(e,id){ if(e.target===document.getElementById(id)) closeOverlay(id); }
-function closeOverlay(id){ document.getElementById(id).classList.remove('open'); }
+function closeOverlay(id){
+  document.getElementById(id).classList.remove('open');
+  if(id==='ovSuccess'){ clearTimeout(window._successT); }
+}
 function openOverlay(id){ document.getElementById(id).classList.add('open'); }
+function openSuccess(){
+  openOverlay('ovSuccess');
+  clearTimeout(window._successT);
+  window._successT = setTimeout(()=>closeOverlay('ovSuccess'), 2500);
+}
 function toast(msg){
   const t=document.getElementById('toast');
   document.getElementById('toastMsg').textContent=msg;

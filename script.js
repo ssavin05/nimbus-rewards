@@ -832,8 +832,11 @@ function toast(msg){
   const oldBar = t.querySelector('.toast-bar'); if(oldBar) oldBar.remove();
   const bar = document.createElement('div'); bar.className='toast-bar'; t.appendChild(bar);
   t.classList.add('show');
+  const myId = ++window._toastId || (window._toastId = 1);
   clearTimeout(window._toastT);
-  window._toastT=setTimeout(()=>t.classList.remove('show'),2200);
+  window._toastT=setTimeout(()=>{
+    if(window._toastId === myId) t.classList.remove('show');
+  },2200);
 }
 /* ─── Ripple universal: feedback táctil sutil en toda la app ─── */
 (function(){

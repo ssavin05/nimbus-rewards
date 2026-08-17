@@ -1,0 +1,63 @@
+ARCHIVO HISTORICO — NO USAR COMO GUIA DE LANZAMIENTO V1 2.5.0.
+Ver OWNER_ACTIONS.md y RELEASE_CHECKLIST.md para el estado actual.
+
+========================================================
+ FASE 02 — AUTENTICACIÓN
+========================================================
+ Proyecto          : xashvchjvsmwyrbxwomd.supabase.co
+ Llave de servicio : AUSENTE (habrá omitidas)
+ Modo              : normal
+ Fecha             : 2026-08-14T03:29:30.600Z
+
+── RLS y Auth sin sesión ───────────────────────────────
+[–] AUTH-07b El login no delata qué correos exis OMITIDA: hace falta CORREO_CONOCIDO=<un correo ya registrado>
+[✓] AUTH-17 Sin sesión no se lee nada privado    10 privadas sin filtrar · 2 vistas con agregados en cero
+[✓] AUTH-18 Sin sesión no se puede escribir      4 escrituras anónimas rechazadas
+[✓] AUTH-19 El catálogo público sí se lee        5 espacios visibles sin cuenta
+[✓] AUTH-20 La ocupación pública no filtra datos sin filas todavía
+[✓] AUTH-21 Un token inventado no vale           3 tokens falsos y una cabecera manipulada, todos rechazados
+── Registro ────────────────────────────────────────────
+[–] AUTH-01 Registro válido                      OMITIDA: registrarse manda correo; hace falta service_role
+[✓] AUTH-02 Correo inválido (servidor)           6 formatos rechazados
+[✓] AUTH-03 Contraseña débil                     rechazadas las contraseñas cortas
+[–] AUTH-03b Contraseña filtrada (HaveIBeenPwned OMITIDA: límite de envío de correo alcanzado
+[–] AUTH-04 Correo duplicado: sin enumerar usuar OMITIDA: hace falta service_role para preparar la cuenta
+── Confirmación y login ────────────────────────────────
+[–] AUTH-05 Confirmación de correo               OMITIDA: hace falta service_role para generar el enlace
+[–] AUTH-06 Login válido                         OMITIDA: hace falta service_role para preparar la cuenta
+[–] AUTH-07 Login incorrecto: mismo mensaje siem OMITIDA: hace falta service_role para preparar la cuenta
+[–] AUTH-08 Usuario sin confirmar no entra       OMITIDA: hace falta service_role para preparar la cuenta
+── Recuperación de contraseña ──────────────────────────
+[–] AUTH-12 Recuperar contraseña                 OMITIDA: hace falta service_role para generar el enlace
+[–] AUTH-13 La contraseña vieja deja de servir   OMITIDA: hace falta service_role
+[–] AUTH-12b Pedir recuperación no revela si el  OMITIDA: hace falta service_role para tener una cuenta conocida
+── Roles y multiempresa ────────────────────────────────
+[–] AUTH-14 Escalada de rol desde una sesión rea OMITIDA: hace falta service_role para preparar la cuenta
+[–] AUTH-15 No se puede tocar otra organización  OMITIDA: hace falta service_role para preparar la cuenta
+── Abuso y límites ─────────────────────────────────────
+[✓] AUTH-16a Freno a la fuerza bruta en el login frenado en el intento 31
+[✓] AUTH-16b Pedir recuperación de un correo des 6 peticiones, todas HTTP 200, sin gastar cupo
+[✗] AUTH-16c El remitente de correo aguanta uso  FALLA: el proyecto usa el remitente de fábrica y ya agotó su cupo por hora. Con la confirmación de correo activada, los registros reales se quedan sin el enlace y la cuenta no se puede activar. Hay que configurar un SMTP propio en Authentication → Emails → SMTP Settings
+── Navegador ───────────────────────────────────────────
+[✓] AUTH-02c Correo inválido (cliente)           0 peticiones a /signup
+[–] AUTH-09 Persistencia de sesión               OMITIDA: hace falta service_role
+[–] AUTH-10 Logout                               OMITIDA: hace falta service_role
+[✓] AUTH-11 Sesión expirada                      detectada y recuperada sin error crudo
+
+========================================================
+ FASE 02 — AUTH
+
+ PASS: 11
+ FAIL: 1
+ SKIP: 15
+
+ RLS y Auth sin sesión:         PARCIAL (5 de 6)
+ Registro:                      PARCIAL (2 de 5)
+ Confirmación y login:          PARCIAL (0 de 4)
+ Recuperación de contraseña:    PARCIAL (0 de 3)
+ Roles y multiempresa:          PARCIAL (0 de 2)
+ Abuso y límites:               FAIL (1)
+ Navegador:                     PARCIAL (2 de 4)
+
+ ❌ 1 prueba falla.
+========================================================

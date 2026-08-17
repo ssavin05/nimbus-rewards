@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mañana: {{ESPACIO}} a las {{HORA}}</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f7fa;color:#1a2233;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+<!-- Texto de vista previa: lo que se lee en la bandeja antes de abrir.
+     Oculto dentro del correo. -->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Recordatorio de tu reserva.</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background:#f5f7fa;padding:24px 12px;">
+  <tr><td align="center">
+
+    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+           style="width:100%;max-width:600px;background:#ffffff;border-radius:12px;
+                  border:1px solid #e3e8f0;overflow:hidden;">
+
+      <!-- cabecera -->
+      <tr><td style="padding:28px 32px 8px 32px;">
+        <span style="font-size:19px;font-weight:700;color:#2f6fed;letter-spacing:-0.2px;">Smart Hub</span>
+      </td></tr>
+
+      <!-- cuerpo -->
+      <tr><td style="padding:8px 32px 32px 32px;font-size:15px;line-height:1.6;color:#1a2233;">
+        <h1 style="margin:12px 0 8px;font-size:22px;">Tu reserva es {{CUANDO}}</h1>
+
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+               style="margin:20px 0;border:1px solid #e3e8f0;border-radius:10px;">
+          <tr>
+            <td style="padding:12px 16px;font-size:13px;color:#5b6577;">Espacio</td>
+            <td style="padding:12px 16px;font-size:14px;font-weight:600;text-align:right;">{{ESPACIO}}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;font-size:13px;color:#5b6577;border-top:1px solid #e3e8f0;">Día</td>
+            <td style="padding:12px 16px;font-size:14px;font-weight:600;text-align:right;border-top:1px solid #e3e8f0;">{{FECHA}}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;font-size:13px;color:#5b6577;border-top:1px solid #e3e8f0;">Hora</td>
+            <td style="padding:12px 16px;font-size:14px;font-weight:600;text-align:right;border-top:1px solid #e3e8f0;">{{HORA}}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;font-size:13px;color:#5b6577;border-top:1px solid #e3e8f0;">Folio</td>
+            <td style="padding:12px 16px;font-size:14px;font-weight:600;text-align:right;border-top:1px solid #e3e8f0;">{{FOLIO}}</td>
+          </tr>
+        </table>
+        <p style="margin:0;">El acceso es por recepción. Si vas con retraso, avísanos por el chat de la app.</p>
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;">
+          <tr><td style="background:#2f6fed;border-radius:8px;">
+            <a href="{{SITIO}}/#/reservas" style="display:inline-block;padding:13px 26px;color:#ffffff;
+               font-size:15px;font-weight:600;text-decoration:none;">Ver mi reserva</a>
+          </td></tr>
+        </table>
+      </td></tr>
+
+    </table>
+
+    <!-- pie -->
+    <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+           style="width:100%;max-width:600px;">
+      <tr><td style="padding:20px 32px;font-size:12px;line-height:1.5;color:#5b6577;text-align:center;">
+        
+        Smart Hub · Ensenada, Baja California<br>
+        <a href="{{SITIO}}/#/legal/privacidad" style="color:#5b6577;">Aviso de privacidad</a> ·
+        <a href="{{SITIO}}/#/legal/terminos" style="color:#5b6577;">Términos</a>
+      </td></tr>
+    </table>
+
+  </td></tr>
+</table>
+</body>
+</html>

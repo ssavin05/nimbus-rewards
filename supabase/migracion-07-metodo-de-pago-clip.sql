@@ -1,0 +1,35 @@
+-- ======================================================================
+-- migracion-07-metodo-de-pago-clip.sql
+--
+-- Prerrequisito para cobrar con Clip. Aplícala ANTES de desplegar la
+-- Edge Function `pagos-clip`. Si instalas de cero, schema.sql ya lo trae.
+--
+-- Qué hace
+-- --------
+-- `pagos.metodo` no es texto libre: es el enum `metodo_pago`, y sólo
+-- admitía stripe, mercadopago, paypal, googlepay, applepay,
+-- transferencia, efectivo y cortesía. Registrar un cobro de Clip fallaba
+-- con «invalid input value for enum metodo_pago: "clip"» — y como
+-- confirmarPago() hace throw ante ese error, el webhook habría devuelto
+-- 500 con el cliente ya cobrado. Es exactamente el mismo desenlace que
+-- el fallo de la migración 05, por otra puerta.
+--
+-- Un enum se amplía, no se recrea: recrearlo obligaría a soltar la
+-- columna, y con ella el histórico de pagos.
+--
+-- Se puede ejecutar varias veces sin problema.
+-- ======================================================================
+
+-- OJO: `alter type ... add value` no puede ir dentro de una transacción
+-- que además USE el valor nuevo. Por eso esta migración no abre
+-- begin/commit: la sentencia es atómica por sí sola.
+alter type public.metodo_pago add value if not exists 'clip';
+
+-- ----------------------------------------------------------------------
+-- Comprobación después de aplicar:
+--
+--   select enumlabel from pg_enum
+--    where enumtypid = 'public.metodo_pago'::regtype
+--    order by enumsortorder;
+--   -- tiene que aparecer 'clip'
+-- ----------------------------------------------------------------------
